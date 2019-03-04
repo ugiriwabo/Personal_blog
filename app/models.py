@@ -95,3 +95,10 @@ class Profile(db.Model):
     def get_all_profile(cls):
         
         return Post.query.all()
+
+class Quote:
+
+    def __init__(self,id,author,quote):
+        self.id =id
+        self.author = author
+        self. quote = quote
