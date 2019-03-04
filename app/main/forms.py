@@ -8,11 +8,17 @@ class PostForm(FlaskForm):
     description = TextAreaField('description ', validators=[Required()])
     submit = SubmitField('Submit')
     
+class UpdatePostForm(FlaskForm):
+    content=TextAreaField('Content',validators = [Required()])
+    submit=SubmitField('SUBMIT')
 
 class CommentForm(FlaskForm):
     comment = TextAreaField('username comment', validators=[Required()])
     submit = SubmitField('Submit')
 
+class SubForm(FlaskForm):
+    email = TextAreaField('input your email', validators=[Required()])
+    submit = SubmitField('Submit')
 
 
 

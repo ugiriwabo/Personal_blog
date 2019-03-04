@@ -58,6 +58,9 @@ class Post(db.Model):
         
         return Post.query.all()
     
+    def delete_comment(self):
+       db.session.delete(self)
+       db.session.commit()
     
 class Comment(db.Model):
     __tablename__ = 'comment'

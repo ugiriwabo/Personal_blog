@@ -1,8 +1,8 @@
 from flask import render_template,redirect,url_for, flash,request
 from . import auth
 from flask_login import login_user,logout_user,login_required
-from ..models import User,Subscribe
-from .forms import LoginForm,RegistrationForm,SubForm
+from ..models import User
+from .forms import LoginForm,RegistrationForm
 from .. import db
 from ..email import mail_message
 
@@ -20,23 +20,7 @@ def login():
 
     title = "Personnel blog website"
     return render_template('auth/login.html',login_form = login_form,title=title)
-
-@auth.route('/subscribe', methods=['GET','POST'])
-def subscribe():
-    sub_form=SubForm()
-    if sub_form.validate_on_submit():
-        email=sub_form.email.data
-        new_subscriber=Subscribe(email=email)
-
-        db.session.add(new_subscriber)
-        db.session.commit()
-        mail_message("you are welcome","email/welcome_subscribe",new_subscriber.email)
-        
-        return redirect(url_for('auth.login'))
-
-    return render_template('subscribe.html',sub_form =sub_form)
-
-
+    
 @auth.route('/logout')
 @login_required
 def logout():
