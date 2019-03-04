@@ -18,4 +18,4 @@ def get_quote():
             quote=get_quote_response.get('quote')
             quote_object=Quote(id,author,quote)
 
-        return quote_object
+    return quote_object
