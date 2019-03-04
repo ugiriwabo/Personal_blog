@@ -4,17 +4,17 @@ from .forms import UpdateProfile,CommentForm,PostForm
 from ..models import User,Post,Comment
 from flask_login import login_required,current_user
 from .. import db,photos
+from ..request import get_quote
+    
+    # post = Post.query.all()
+
 
 @main.route('/')
 def index():
-    
-    '''
-    View root page function that returns the index page and its data
-    '''
-
     title = 'Home - Welcome to The best Post Website Online'
+    quote=get_quote()
     all_post = Post.get_all_post()
-    return render_template('index.html', title = title, all_post=all_post)
+    return render_template('index.html', title = title, all_post=all_post,quote=quote)
 
 @main.route('/user/<uname>')
 def profile(uname):
