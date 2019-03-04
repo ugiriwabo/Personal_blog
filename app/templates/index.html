@@ -1,58 +1,35 @@
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        {% if title %}
-        <title> {{ title }}</title>
-        {% else %}
-        <title> Welcome to the best Movie Review website </title>
-        {% endif %}
-        {% extends 'base.html'%}
-        {% import 'macros.html' as macro%}
-
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
 <!-- Styles block -->
+{% block content %}
+    <div style="background-color:burlywood;">
+        <div style="  margin-right:100px;margin-left: 100px;text-align:center; font-size:6px;">
+            <span style="font-size:60px; font-family: 'Akronim', cursive;">PERSONAL-BLOG-WEBSITE</span>
+        </div>
+        <div class="panel" style=" border: 3px solid #f2f2f2; margin-top:10px; padding:20px; margin-left: 100px;margin-right: 100px;">
+            <p style="font-family: 'Bellefair', serif; font-size:25px;">If you won't to add post,first sign up and then continue,please also feel free to comment</p>
+            <div style="text-align:center; font-size: 25px;">
+                <a href="auth/register">
+                    <br>
+                    <span >Add a new post</span>
+                </a>
+            </div>
+        </div> 
+        <br>
+        <div class="panel" style=" border: 3px solid #f2f2f2; margin-top:10px; padding:20px; margin-left: 100px;margin-right: 100px; text-align:center;">
+            {%for dodo in all_post%}
+            <p>{{dodo.description}}</p>
+            <a href="/comment/{{dodo.id}}" ><button>comment</button></a>
+            {%endfor%}
+        </div>
+    </div>
+            
+           
+            
+    <div class="row">
+            
+      {{macro.displayPostList(post_list)}}
+    </div>  
 
-        {% block styles%}
-        {{ super() }}
-        <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
-        {% endblock %}
-        
-    </head>
-  
-    <body>
-   
-
-    <!-- Content block -->
-   
-    {% block content %}
-
-<div class="container">
-    <form>
-        <input type="text" name="movie_query" placeholder="Search for a Movie" class="form-control">
-        <input type="submit"  value="Submit" class="btn btn-default">
-    </form>
-
-</div>
-
-    <!-- Popular movie -->
-    <h3> Popular Movies</h3>
-    <ul>
-        {{ macro.displayMovieList(popular)}}
-    </ul>
-    <!-- Upcoming movie  -->
-    <h3> Upcoming Movies </h3>
-    <ul>
-        {{ macro.displayMovieList(upcoming)}}
-    </ul>
-    <!-- Now showing movie -->
-    <h3>Now Showing</h3>
-    <ul>
-        {{ macro.displayMovieList(now_showing)}}
-    </ul>
-
-
-{% endblock%}
-       
-</body>
-</html>
+    
+{% endblock %}

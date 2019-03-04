@@ -2,39 +2,24 @@
 
 {% block content %}
   <div class="container">
-    <div class="row">
+      <a href="{{url_for('main.index')}}">
+          <button type="button" class="btn btn-primary btn-sm" style="margin-bottom:10px;">
+              <span class="glyphicon glyphicon-chevron-left" ></span> Back
+          </button>
+      </a>
 
-      <!-- displaying  Username-->
+    <div class="row">
+              <!-- displaying  Username-->
       <div class="col-md-4">
           <h3> {{user.username| capitalize}} </h3>
 
-          <!--Displaying user bio-->
-          {% if user.bio %}
-            <p> {{user.bio}}</p>
-
-            {%else%}
-            <p> {{user.username| capitalize}} has no bio </p>
+          <!--Displaying user description-->
+          {% if user.description %}
+            <p> {{user.description}}</p>
           {% endif %}
 
           {% if user == current_user %}
             <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit profile</a>
-          {% endif %}
-
-          <!-- <div class="col-md-4"> -->
-          {% if user.profile_pic_path %} 
-
-            <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail">
-
-            {%else%}
-            <p>No profile picture</p>
-            {% endif %}
-
-          {% if user == current_user %}
-          <form  action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype = "multipart/form-data">
-
-            <input type="file"  name="photo" class="form-control" required>
-            <input type="submit">
-          </form>
           {% endif %}
       </div>
     </div>

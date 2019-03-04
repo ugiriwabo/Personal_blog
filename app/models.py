@@ -2,67 +2,23 @@ from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from . import login_manager
+# from datetime import datetime 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.get(int(user_id))  
 
-class Movie:
-    '''
-    Movie class to define Movie Objects
-    '''
-
-    def __init__(self,id,title,overview,poster,vote_average,vote_count):
-        self.id =id
-        self.title = title
-        self.overview = overview
-        self.poster = "https://image.tmdb.org/t/p/w500/" + poster
-        self.vote_average = vote_average
-        self.vote_count = vote_count
-
-
-
-class Review:
-
-    all_reviews = []
-
-    def __init__(self,movie_id,title,imageurl,review):
-        self.movie_id = movie_id
-        self.title = title
-        self.imageurl = imageurl
-        self.review = review
-
-
-    def save_review(self):
-        Review.all_reviews.append(self)
-
-
-    @classmethod
-    def clear_reviews(cls):
-        Review.all_reviews.clear()
-
-    @classmethod
-    def get_reviews(cls,id):
-
-        response = []
-
-        for review in cls.all_reviews:
-            if review.movie_id == id:
-                response.append(review)
-
-        return response
-
-
-class User(UserMixin,db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255),index = True)
     email = db.Column(db.String(255),unique = True,index = True)
-    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
-    bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
+    password_hash = db.Column(db.String(255))
     pass_secure = db.Column(db.String(255))
+    post=db.relationship('Post',backref='user',lazy='dynamic')
+    comments=db.relationship('Comment',backref='user',lazy='dynamic')
 
     def __repr__(self):
         return f'User {self.name}'
@@ -82,16 +38,60 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
-class Role(db.Model):
-    __tablename__ = 'roles'
+    
+class Post(db.Model):
+    __tablename__ = 'post'
 
     id = db.Column(db.Integer,primary_key = True)
-    name = db.Column(db.String(255))
-    users = db.relationship('User',backref = 'role',lazy="dynamic")
+    post = db.Column(db.String)
+    category = db.Column(db.Integer)
+    description = db.Column(db.String(255))
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+    comments = db.relationship('Comment',backref = 'post',lazy="dynamic")
 
+    def save_post(self):
+        db.session.add(self)
+        db.session.commit()
 
-
-
+    @classmethod
+    def get_all_post(cls):
+        
+        return Post.query.all()
     
+    
+class Comment(db.Model):
+    __tablename__ = 'comment'
 
+    id = db.Column(db.Integer,primary_key = True)
+    comment = db.Column(db.String(255))
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    post_id = db.Column(db.Integer,db.ForeignKey('post.id'))
+
+
+    def __repr__(self):
+        return f'User {self.name}'
+    
+    def save_comment(self):
+            db.session.add(self)
+            db.session.commit()
    
+    @classmethod
+    def get_all_comments(cls):
+        return comment.query.all
+
+class Profile(db.Model):
+    
+    __tablename__ ='post_profile'
+
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(255))
+
+    def save_profile(self):
+        
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_all_profile(cls):
+        
+        return Post.query.all()
