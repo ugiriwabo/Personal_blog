@@ -65,3 +65,5 @@ def new_comment(id):
         new_comment.save_comment()
         return redirect(url_for('.new_comment',id=id))
     return render_template('new_comment.html', imishwi=imishwi,comment_form=form)
+
+
