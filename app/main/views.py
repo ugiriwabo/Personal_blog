@@ -80,21 +80,21 @@ def delete_comment(id):
     return render_template('new_comment.html',imishwiform=imishwiform)
 
 
-# @main.route('/edit/post/<int:id>',methods= ['GET','POST'])
-# @login_required
-# def update_post(id):
-#    post=Post.query.filter_by(id=id).first()
-#    if post is None:
-#         abort(404)
+@main.route('/edit/post/<int:id>',methods= ['GET','POST'])
+@login_required
+def update_post(id):
+   post=Post.query.filter_by(id=id).first()
+   if post is None:
+        abort(404)
 
-#    form=UpdatePostForm()
-#    if form.validate_on_submit():
-#          post.description=form.content.data
-#          db.session.add(post)
-#          db.session.commit()
+   form=UpdatePostForm()
+   if form.validate_on_submit():
+         post.description=form.content.data
+         db.session.add(post)
+         db.session.commit()
 
-#          return redirect(url_for('main.index'))
-#    return render_template('update_post.html',form=form)
+         return redirect(url_for('main.index'))
+   return render_template('update_post.html',form=form)
 
 @main.route('/subscribe', methods=['GET','POST'])
 def subscribe():
