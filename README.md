@@ -26,3 +26,5 @@ You would need the following to access the website:
 * Internet connectivity (either wireless or ethernet)
 * A web browser(Chrome is most recommendable).
 
+# Email
+ugiraconsole@gmail.com
