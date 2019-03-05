@@ -1,6 +1,6 @@
 from flask import render_template,redirect,url_for,abort
 from . import main
-from .forms import UpdateProfile,CommentForm,PostForm,SubForm
+from .forms import UpdateProfile,CommentForm,PostForm,SubForm,UpdatePostForm
 from ..models import User,Post,Comment,Subscribe
 from flask_login import login_required,current_user
 from .. import db,photos
@@ -71,28 +71,30 @@ def new_comment(id):
 
 @main.route('/delete/comment/<int:id>' , methods = ['GET', 'POST']) 
 def delete_comment(id):
-    imishwi =Comment.query.filter_by(post_id = id).all()  
-    if comment is not None:
-        dada.delete_comment()
+    imishwi =Comment.query.filter_by(post_id = id).first()
+    imishwiform=CommentForm()  
+    if imishwi is not None:
+        imishwi.delete_comment()
 
         return redirect(url_for('main.index'))
+    return render_template('new_comment.html',imishwiform=imishwiform)
 
 
-@main.route('/edit/post/<int:id>',methods= ['GET','POST'])
-@login_required
-def update_post(id):
-   post=Post.query.filter_by(id=id).first()
-   if post is None:
-        abort(404)
+# @main.route('/edit/post/<int:id>',methods= ['GET','POST'])
+# @login_required
+# def update_post(id):
+#    post=Post.query.filter_by(id=id).first()
+#    if post is None:
+#         abort(404)
 
-   form=UpdatePostForm()
-   if form.validate_on_submit():
-         post.content=form.content.data
-         db.session.add(post)
-         db.session.commit()
+#    form=UpdatePostForm()
+#    if form.validate_on_submit():
+#          post.description=form.content.data
+#          db.session.add(post)
+#          db.session.commit()
 
-         return redirect(url_for('main.index'))
-   return render_template('update_post.html',form=form)
+#          return redirect(url_for('main.index'))
+#    return render_template('update_post.html',form=form)
 
 @main.route('/subscribe', methods=['GET','POST'])
 def subscribe():

@@ -9,7 +9,7 @@ class PostForm(FlaskForm):
     submit = SubmitField('Submit')
     
 class UpdatePostForm(FlaskForm):
-    content=TextAreaField('Content',validators = [Required()])
+    content=TextAreaField('Update Content',validators = [Required()])
     submit=SubmitField('SUBMIT')
 
 class CommentForm(FlaskForm):
