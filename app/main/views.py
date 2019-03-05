@@ -68,13 +68,15 @@ def new_comment(id):
         return redirect(url_for('.new_comment',id=id))
     return render_template('new_comment.html', imishwi=imishwi,comment_form=form)
 
-@main.route('/delete/comment/<int:id>', methods = ['GET', 'POST']) 
-def delete_comment():
-    # comment=Comment.query.filter_by(id=id).first()   
+
+@main.route('/delete/comment/<int:id>' , methods = ['GET', 'POST']) 
+def delete_comment(id):
+    imishwi =Comment.query.filter_by(post_id = id).all()  
     if comment is not None:
-        comment.delete_comment()
+        dada.delete_comment()
 
         return redirect(url_for('main.index'))
+
 
 @main.route('/edit/post/<int:id>',methods= ['GET','POST'])
 @login_required
