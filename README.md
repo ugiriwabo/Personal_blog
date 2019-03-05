@@ -10,3 +10,10 @@ Ugiriwabo Aline Consolee
 
 This is an app that allows users to create,submit, add post ,add comment and then subscribe 
 
+### Project Setup installations
+
+* Python3.6
+* Pip
+* Virtualenv
+* flask
+
